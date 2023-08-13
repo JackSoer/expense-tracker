@@ -34,20 +34,20 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- TODO -->
+                <?php echo $table  ?>
             </tbody>
             <tfoot>
                 <tr>
                     <th colspan="3">Total Income:</th>
-                    <td><!-- TODO --></td>
+                    <td><?php echo $totalIncome  ?></td>
                 </tr>
                 <tr>
                     <th colspan="3">Total Expense:</th>
-                    <td><!-- TODO --></td>
+                    <td><?php echo $totalExpense ?></td>
                 </tr>
                 <tr>
                     <th colspan="3">Net Total:</th>
-                    <td><!-- TODO --></td>
+                    <td><?php echo $netTotal ?></td>
                 </tr>
             </tfoot>
         </table>

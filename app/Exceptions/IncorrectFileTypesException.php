@@ -6,5 +6,5 @@ namespace App\Exceptions;
 
 class IncorrectFileTypesException extends \Exception
 {
-    protected $message = 'Incorrect File Type';
+    protected $message = "An Incorrect Files Type";
 }

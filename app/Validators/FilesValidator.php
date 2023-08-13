@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Validators;
 
-class Validation {
+class FilesValidator {
   static public function typeFiles(array $fileNames, string $fileType): bool
   {
     if($fileType[0] !== '.') {
       $fileType = '.' . $fileType;
     }
 
-    foreach($fileNames as $filePath)
+    foreach($fileNames as $fileName)
     {
-      if(!str_ends_with($filePath, $fileType))
+      if(!str_ends_with($fileName, $fileType))
       {
         return false;
       }

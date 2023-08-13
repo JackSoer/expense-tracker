@@ -7,6 +7,7 @@ use App\Config;
 use App\Controllers\HomeController;
 use App\Controllers\TransactionsController;
 use App\Router;
+use App\Utils\FilesManager;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
@@ -20,7 +21,8 @@ $router = new Router();
 
 $router
     ->get('/', [HomeController::class, 'index'])
-    ->post('/transactions', [TransactionsController::class, 'index']);
+    ->post('/transactions', [TransactionsController::class, 'index'])
+    ->get('/download', [FilesManager::class, 'download', ['application/csv', 'sample.csv', dirname(STORAGE_PATH) . '/sample_1.csv']]);
 
 (new App(
     $router,

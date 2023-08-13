@@ -11,10 +11,10 @@
         <div class="home">
             <h1 class="home__title">Expense Tracker</h1>
             <form action="/transactions" class="home__form" method="post" enctype="multipart/form-data">
-                <label for="transactions" class="home__upload-input-label">Upload .csv file</label>
+                <label for="transactions" class="home__upload-input-label">Upload transactions .csv files</label>
                 <input type="file" name="transactions[]" id="transactions" class="home__upload-input" multiple>
-                <button type="submit" class="home__submit">Show</button>
+                <button type="submit" class="home__submit">Show expense info</button>
             </form>
-        </div>
+            <p class="home__csv-example-text">You can download a sample transaction file<a href="/download" class="home__csv-example"> here</a>.</p>
     </body>
 </html>

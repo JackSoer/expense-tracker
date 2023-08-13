@@ -23,12 +23,12 @@ class TransactionsController
     {
       $this->setTransactionsData();
 
-      $this->transactionsModel->uploadTransactionsDataToDB();
-
-      FilesManager::deleteFilesFromFolder(STORAGE_PATH);
-
       $transactionsInfo = $this->transactionsModel->getTransactionsInfo();
       $transactionsInfo['table'] = TransactionsView::renderTransactions($this->transactionsModel->getTransactionsData());
+
+      $this->transactionsModel->uploadTransactionsDataIntoDB();
+
+      FilesManager::deleteFilesFromFolder(STORAGE_PATH);
 
       return TransactionsView::make('transactions/transactions',$transactionsInfo);
     }

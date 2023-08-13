@@ -83,4 +83,14 @@ class FilesManager {
 
     return new static();
   }
+
+  static public function download($contentType, $fileName, $filePath): string
+  {
+    header("Contrent-Type: {$contentType}");
+    header("Content-Disposition: attachment; filename={$fileName}");
+
+    readfile($filePath);
+
+    return '';
+  }
 }

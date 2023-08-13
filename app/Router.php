@@ -46,13 +46,18 @@ class Router
         }
 
         if (is_array($action)) {
-            [$class, $method] = $action;
+            if(isset($action[2])) {
+                [$class, $method, $args] = $action;
+            } else {
+                [$class, $method] = $action;
+                $args = [];
+            }
 
             if (class_exists($class)) {
                 $class = new $class();
 
                 if (method_exists($class, $method)) {
-                    return call_user_func_array([$class, $method], []);
+                    return call_user_func_array([$class, $method], [...$args]);
                 }
             }
         }

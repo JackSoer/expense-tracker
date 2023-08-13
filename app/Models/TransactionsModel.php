@@ -5,13 +5,14 @@ declare(strict_types = 1);
 namespace App\Models;
 
 use App\Formaters\CurrencyFormater;
+use App\Formaters\DateFormater;
 use App\Model;
 use App\Utils\MathManager;
-use NumberFormatter;
 
 class TransactionsModel extends Model {
   public function __construct(protected array $transactionsData = [])
   {
+    parent::__construct();
   }
 
   public function setTransactionsData(array $transactionsData): static
@@ -26,8 +27,45 @@ class TransactionsModel extends Model {
     return $this->transactionsData;
   }
 
-  public function uploadTransactionsDataToDB(): static 
+  public function uploadTransactionsDataIntoDB(): static 
   {
+    $transactionColumnNames = array_keys($this->transactionsData);
+    $transactionDataColumnLenght = count($this->transactionsData['Amount']);
+
+    for($i = 0; $i < $transactionDataColumnLenght - 1; $i++) 
+    {
+      $transaction = [];
+
+      foreach($transactionColumnNames as $transactionColumnName)
+      {
+        $transaction[$transactionColumnName] = $this->transactionsData[$transactionColumnName][$i];
+      }
+
+      $this->uploadTransactionIntoDB($transaction);
+    }
+
+    return $this;
+  }
+
+  public function uploadTransactionIntoDB(array $values): static 
+  {
+    try {
+      $query = 'INSERT INTO transactions (transactionDate, transactionCheck, description, amount)
+      VALUES (:transactionDate, :transactionCheck, :description, :amount)';
+
+      $stmt = $this->db->prepare($query);
+
+      $stmt->execute(
+        [
+          'transactionDate' => DateFormater::formatDate($values['Date'], 'Y-m-d H:m:i'),
+          'transactionCheck' => $values['Check #'],
+          'description' => $values['Description'],
+          'amount' => CurrencyFormater::currenciesToNumbers([$values['Amount']])[0],
+        ]
+      );
+    } catch(\PDOException $err) {
+      throw new \PDOException($err->getMessage());
+    }
 
     return $this;
   }

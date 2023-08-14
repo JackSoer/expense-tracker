@@ -23,14 +23,14 @@ class TransactionsController
     {
       $this->setTransactionsData();
 
-      $transactionsInfo = $this->transactionsModel->getTransactionsInfo();
-      $transactionsInfo['table'] = TransactionsView::renderTransactions($this->transactionsModel->getTransactionsData());
-
       $this->transactionsModel->uploadTransactionsDataIntoDB();
 
       FilesManager::deleteFilesFromFolder(STORAGE_PATH);
 
-      return TransactionsView::make('transactions/transactions',$transactionsInfo);
+      $transactionsInfo = $this->transactionsModel->getTransactionsInfo();
+      $transactionsInfo['table'] = TransactionsView::renderTransactions($this->transactionsModel->getTransactionsData());
+
+      return TransactionsView::make('transactions/transactions', $transactionsInfo);
     }
 
     public function setTransactionsData(): static {

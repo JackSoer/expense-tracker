@@ -15,7 +15,7 @@ class TransactionsView extends View
   
     for($i = 0; $i < count($transactions["Amount"]); $i++) {
       $rowContent = "";
-      $keys = array_keys($transactions);
+      $keys = array_keys($transactions); 
   
       foreach($keys as $key) {
         $element = $transactions[$key][$i];

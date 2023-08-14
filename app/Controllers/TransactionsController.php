@@ -5,10 +5,12 @@ declare(strict_types = 1);
 namespace App\Controllers;
 
 use App\Exceptions\IncorrectFileTypesException;
+use App\Exceptions\IncorrectTransactionsContentException;
 use App\Formaters\CurrencyFormater;
 use App\Models\TransactionsModel;
 use App\Utils\FilesManager;
 use App\Validators\FilesValidator;
+use App\Validators\TransactionsValidator;
 use App\View;
 use App\Views\TransactionsView;
 
@@ -45,6 +47,12 @@ class TransactionsController
       FilesManager::moveFilesFromTempDirTo($filePaths, $fileNames, STORAGE_PATH);
 
       $transactionsData = FilesManager::convertCsvFilesInDirToArray(STORAGE_PATH);
+
+      if(!TransactionsValidator::isProperTransactionsData($transactionsData))
+      {
+        FilesManager::deleteFilesFromFolder(STORAGE_PATH);
+        throw new IncorrectTransactionsContentException();
+      }
 
       $this->transactionsModel->setTransactionsData($transactionsData);
 

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Validators;
 
-class FilesValidator {
+class FilesValidator 
+{
   static public function typeFiles(array $fileNames, string $fileType): bool
   {
     if($fileType[0] !== '.') {
